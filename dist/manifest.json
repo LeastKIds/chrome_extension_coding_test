@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "coding test",
-  "description": "coding test description",
+  "name": "Reading time",
+  "description": "Add the reading time to Chrome Extension documentation articles",
   "version": "1.0",
   "action": {
     "default_popup": "index.html"

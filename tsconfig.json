@@ -4,7 +4,16 @@
       "module": "ESNext",
       "lib": ["ESNext", "DOM"],
       "moduleResolution": "Node",
-      "strict": true
+      "strict": true,
+      "allowJs": true,
+      "skipLibCheck": true,
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "forceConsistentCasingInFileNames": true,
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "noEmit": true,
+      "jsx": "react-jsx"
     },
     "include": ["src"]
-}
+  }
