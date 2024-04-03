@@ -10,6 +10,6 @@ loginButton?.addEventListener('click', (event) => {
   const token = (document.getElementById('token') as HTMLInputElement).value;
 
   fetch('https://api.github.com').then((response) => {
-        alert(response);
+        alert(response.json());
     })
 });
