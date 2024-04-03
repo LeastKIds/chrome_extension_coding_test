@@ -9,7 +9,7 @@ loginButton?.addEventListener('click', (event) => {
   // 토큰값 가져오기
   const token = (document.getElementById('token') as HTMLInputElement).value;
 
-  fetch('https://api.github.com').then((response) => {
-        alert(response.json());
-    })
+  fetch('https://api.github.com').then(response => response.json()).then(data => {
+    alert(JSON.stringify(data))
+  })
 });
