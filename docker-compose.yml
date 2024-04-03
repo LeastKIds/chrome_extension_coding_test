@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  node:
+    container_name: node
+    image: node
+    volumes:
+      - ./:/app
+    command: sleep infinity
