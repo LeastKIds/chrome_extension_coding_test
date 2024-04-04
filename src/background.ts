@@ -14,13 +14,12 @@ chrome.runtime.onMessage.addListener(
             const USER = data["login"];
             chrome.storage.sync.set({ USER: USER }, function() {
               console.log("saved user name")
+              sendResponse({ status: true, data: {USER: USER}});
             });
-
-            sendResponse({ status: true, data: {USER: USER}});
         })
-        // .catch(error => {
-        //     sendResponse({ status: false , data: {errMessage: error}});
-        // })
+        .catch(error => {
+            sendResponse({ status: false , data: {errMessage: error}});
+        })
 
         return true;
       }
