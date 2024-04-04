@@ -27,9 +27,17 @@ const manifest = defineManifest({
     background: {
       service_worker: './src/background.ts', // 백그라운드 스크립트로 사용할 파일 지정
     },
-    "permissions": [
+    content_scripts: [
+      {
+        matches: ["https://leetcode.com/problems/*"],
+        js: ["./src/contentScript.ts"],
+        run_at: "document_idle"
+      }
+    ],
+    permissions: [
       "storage"
     ],
+
 })
 
 // 나중에 매니페스트로 사용할 수 있게 바꿔주는 곳

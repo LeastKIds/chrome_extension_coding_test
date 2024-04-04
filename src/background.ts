@@ -47,7 +47,7 @@ chrome.runtime.onMessage.addListener(
           fetch(`https://api.github.com/repos/${USER}/${REPO}`)
           .then(response => response.json())
           .then(data => {
-            chrome.storage.sync.set({ USER: USER, TOKEN: TOKEN, REPO: REPO }, function() {
+            chrome.storage.sync.set({ USER: USER, TOKEN: TOKEN, REPO: REPO}, function() {
               if (chrome.runtime.lastError) {
                   if (!responded) {
                       sendResponse({ status: false, data: {errMessage: chrome.runtime.lastError.message}});
@@ -113,8 +113,6 @@ chrome.runtime.onMessage.addListener(
           }
         }
       });
-
-      
       return true
     }
   }

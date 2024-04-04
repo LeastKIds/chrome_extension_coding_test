@@ -10,7 +10,29 @@
     "service_worker": "service-worker-loader.js",
     "type": "module"
   },
+  "content_scripts": [
+    {
+      "js": [
+        "assets/content-script-loader.contentScript.ts.b0e61c68.6c6c7e0d.js"
+      ],
+      "matches": [
+        "https://leetcode.com/problems/*"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
   "permissions": [
     "storage"
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://leetcode.com/*"
+      ],
+      "resources": [
+        "assets/contentScript.ts.b0e61c68.js"
+      ],
+      "use_dynamic_url": true
+    }
   ]
 }
