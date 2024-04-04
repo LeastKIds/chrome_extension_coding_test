@@ -12,9 +12,12 @@ loginButton?.addEventListener('click', (event) => {
   chrome.runtime.sendMessage({type: "login", data: {TOKEN: TOKEN}}, (response: {status: string, data?: any}) => {
     if (response.status == "true") {
       alert(`Login success! User: ${response.data.login}`);
+      console.log("Login success! User: ", response.data.login)
     } else {
       alert(response.data.errorCode)
+      console.log(response.data.errorCode)
     }
-    alert(response.data)
+
+    console.log("testesets")
   });
 });

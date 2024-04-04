@@ -5,9 +5,9 @@ const manifest = defineManifest({
 // 매니페스트 버전
   manifest_version: 3,
   // 확장 프로그램 이름
-  name: 'Reading time',
+  name: 'coding test automatic push',
   // 설명
-  description: 'Add the reading time to Chrome Extension documentation articles',
+  description: 'coding test automatic push description',
   // 확장 프로그램 버전
   version: '1.0',
   // 여기서 부터가 코드
