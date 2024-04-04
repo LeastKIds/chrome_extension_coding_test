@@ -11,6 +11,7 @@ loginButton?.addEventListener('click', (event) => {
 
   chrome.runtime.sendMessage({ type: "login", data: {TOKEN: TOKEN} }, function(response) {
     console.log("Response from background:", response);
+    alert(response.status)
     if (response.status) {
       alert("Login Success");
       const github_token = document.getElementById('github_token');
