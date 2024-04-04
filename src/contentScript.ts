@@ -34,11 +34,10 @@ function clickSubmitButton() {
     const successElement = getElementByXPath(successTagXPath);
 
     if (successElement) {
-      console.log('원하는 요소가 페이지에 존재합니다.');
-      console.log(successElement.textContent);
       // 여기에 원하는 요소를 처리하는 로직을 추가하세요.
-      if (successElement.textContent === "Success") {
+      if (successElement.textContent === "Accepted") {
         console.log('성공적으로 처리되었습니다.');
+        infoExtraction();
       }
 
       // 요소가 발견되면 더 이상의 감지가 필요 없으므로, observer를 중지합니다.
@@ -50,3 +49,45 @@ function clickSubmitButton() {
   const clickObserver = new MutationObserver(clickCallback);
   clickObserver.observe(document.body, { childList: true, subtree: true });
 }
+
+
+  
+// XPath를 사용하여 특정 요소를 찾는 함수
+function getElementByXPathChildren(xpath: string): Element | null {
+    return document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue as Element;
+  }
+
+// 특정 요소의 바로 아래에 있는 자식들만 가져오는 함수
+function getImmediateChildrenByXPath(xpath: string): Element[] {
+    const parentElement = getElementByXPathChildren(xpath);
+    let children: Element[] = [];
+
+    if (parentElement) {
+        // HTMLCollection을 Element[] 타입으로 변환
+        children = Array.from(parentElement.children);
+    }
+
+    return children;
+}
+  
+
+function infoExtraction() {
+    const codesXpath = "/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[8]/div/div[2]/div[1]/div/div/div[1]/div[2]/div[1]/div[5]"
+    const codes = getImmediateChildrenByXPath(codesXpath);
+
+    let codeTxt: string = "";
+
+    codes.forEach((code) => {
+        const codeWrapper = code.firstElementChild
+        
+        if (codeWrapper) {
+            for (const c of Array.from(codeWrapper.children)) {
+                codeTxt += c.textContent
+            }
+        }
+       
+    });
+
+    console.log(codeTxt);
+}
+
