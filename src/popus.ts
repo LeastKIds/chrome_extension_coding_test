@@ -25,7 +25,7 @@ loginButton?.addEventListener('click', (event) => {
       }
 
     } else {
-      alert(response.data.errMessage);
+      alert(JSON.stringify(response));
     }
     
   });
