@@ -13,7 +13,7 @@ loginButton?.addEventListener('click', (event) => {
     console.log("Response from background:", response);
     alert(response.status)
     if (response.status) {
-      alert("Login Success");
+      alert(response.data.USER);
       const github_token = document.getElementById('github_token');
       if (github_token) {
         github_token.style.display = 'none';
