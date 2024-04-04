@@ -1,1 +1,0 @@
-chrome.runtime.onMessage.addListener(async(a,s,t)=>{if(a.type==="login"){const o=a.data.TOKEN;try{const r=await fetch("https://api.github.com/user",{headers:{Authorization:`Bearer ${o}`}});r.ok||t({status:"false",data:{errorCode:"loginError"}});const e=(await r.json()).login;t({status:"true",data:{login:e}})}catch{t({status:"false",data:{errorCode:"networkError"}})}}return!0});
