@@ -81,6 +81,62 @@ chrome.runtime.onMessage.addListener(
 
 
       return true
+    } else if (request.type === 'auth') {
+      let responded = false; // 응답 플래그를 false로 초기화
+      
+      chrome.storage.sync.get(['USER', 'TOKEN', 'REPO'], (result) => {
+        if (result.USER && result.TOKEN && result.REPO) {
+          checkAuth(result.TOKEN, result.REPO)
+          .then((check) => {
+            if (check) {
+              if (!responded) {
+                sendResponse({ status: true, data: {USER: result.USER, REPO: result.REPO}});
+                responded = true; // 응답 플래그를 true로 설정
+              }
+            } else {
+              if (!responded) {
+                sendResponse({ status: false, data: {errMessage: "Auth failed"}});
+                responded = true; // 응답 플래그를 true로 설정
+              }
+            }
+          })
+          .catch((error) => {
+            if (!responded) {
+              sendResponse({ status: false, data: {errMessage: error.toString()}});
+              responded = true; // 응답 플래그를 true로 설정
+            }
+          })
+        } else {
+          if (!responded) {
+            sendResponse({ status: false, data: {errMessage: result}});
+            responded = true; // 응답 플래그를 true로 설정
+          }
+        }
+      });
+
+      
+      return true
     }
   }
 );
+
+async function checkAuth(token: string, repo: string): Promise<boolean>{
+  const response = await fetch('https://api.github.com/user', {
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+  });
+
+  if (!response.ok) {
+    return false;
+  }
+  const data = await response.json();
+  const USER = data["login"];
+
+  const repoResponse = await fetch(`https://api.github.com/repos/${USER}/${repo}`);
+  if (!repoResponse.ok) {
+    return false;
+  }
+
+  return true
+}

@@ -1,3 +1,5 @@
+loginCheck()
+
 // 토큰 버튼을 찾아서 변수에 할당합니다.
 const loginButton = document.querySelector('button[type="submit"]');
 
@@ -53,3 +55,19 @@ repoButton?.addEventListener('click', function() {
     
   });
 });
+
+function loginCheck() {
+  chrome.runtime.sendMessage({ type: "auth"}, function(response: any) {
+    if (response.status) {
+      const github_token = document.getElementById('github_token');
+      if (github_token) {
+        github_token.style.display = 'none';
+      }
+
+      const success = document.getElementById('success');
+      if (success) {
+        success.style.display = 'block';
+      }
+    } 
+  });
+}
