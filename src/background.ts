@@ -1,24 +1,11 @@
 chrome.runtime.onMessage.addListener(
-    async (request, sender) => {
-        if (request.type === "login") {
-            const TOKEN = request.data.TOKEN;
-            try {
-                const loginResponse = await fetch('https://api.github.com/user', {
-                    headers: {
-                        'Authorization': `Bearer ${TOKEN}`
-                    }
-                });
-
-                if (!loginResponse.ok) {
-                    chrome.runtime.sendMessage({status: "false", data: {errorCode: "loginError"}});
-                    return;
-                }
-
-                const userData = await loginResponse.json();
-                chrome.runtime.sendMessage({status: "true", data: {login: userData.login}});
-            } catch (error) {
-                chrome.runtime.sendMessage({status: "false", data: {errorCode: "networkError"}});
-            }
-        }
+    function(request, sender, sendResponse) {
+      if (request.type === "login") {
+        console.log("Login message received");
+        // 여기에서 로그인 처리 로직을 실행할 수 있습니다.
+  
+        // 예시 응답
+        sendResponse({ status: "Received the login message" , data: {response: "success"}});
+      }
     }
-);
+  );

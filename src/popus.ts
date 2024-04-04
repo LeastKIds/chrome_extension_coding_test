@@ -9,23 +9,9 @@ loginButton?.addEventListener('click', (event) => {
   // 토큰값 가져오기
   const TOKEN = (document.getElementById('token') as HTMLInputElement).value;
 
-  // 백그라운드 스크립트로 메시지를 보냅니다.
-  chrome.runtime.sendMessage({
-    type: "login",
-    data: {
-        TOKEN: TOKEN
-    }
-  }, response => {
-    // 여기서 백그라운드 스크립트로부터의 응답을 처리합니다.
-    if (response.status === "true") {
-        console.log("Login success! User: ", response.data.login);
-        alert("login success user: " + response.data.login);
-        // 로그인 성공 시 UI 업데이트
-    } else {
-        console.error("Login failed: ", response.data.errorCode);
-        alert("login failed: " + response.data.errorCode);
-        // 오류 처리
-    }
+  chrome.runtime.sendMessage({ type: "login", data: {TOKEN: TOKEN} }, function(response) {
+    console.log("Response from background:", response);
+    alert(response);
   });
 
 
