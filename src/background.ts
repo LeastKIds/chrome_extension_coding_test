@@ -61,9 +61,15 @@ chrome.runtime.onMessage.addListener(
               }
           });
           })
+          .catch(error => {
+            if (!responded) {
+                sendResponse({ status: false, data: {errMessage: error.toString()}});
+                responded = true; // 응답 플래그를 true로 설정
+            }
+          })
         } else {
           if (!responded) {
-            sendResponse({ status: false, data: {errMessage: 'No user data found'}});
+            sendResponse({ status: false, data: {errMessage: result}});
             responded = true; // 응답 플래그를 true로 설정
           }
         }
