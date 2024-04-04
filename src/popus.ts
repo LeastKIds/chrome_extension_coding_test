@@ -9,7 +9,7 @@ loginButton?.addEventListener('click', (event) => {
   // 토큰값 가져오기
   const TOKEN = (document.getElementById('token') as HTMLInputElement).value;
 
-  chrome.runtime.sendMessage({type: "login", data: {TOKEN: TOKEN}}, (response: {status: string; data?: any}) => {
+  chrome.runtime.sendMessage({type: "login", data: {TOKEN: TOKEN}}, (response: {status: string, data?: any}) => {
     if (response.status == "true") {
       alert(`Login success! User: ${response.data.login}`);
     } else {
