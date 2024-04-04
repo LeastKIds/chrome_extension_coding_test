@@ -10,8 +10,7 @@ loginButton?.addEventListener('click', (event) => {
   const TOKEN = (document.getElementById('token') as HTMLInputElement).value;
 
   chrome.runtime.sendMessage({ type: "login", data: {TOKEN: TOKEN} }, function(response: any) {
-    console.log("Response from background:", response);
-    alert(response.status)
+   
     if (response.status) {
       alert(response.data.USER);
       const github_token = document.getElementById('github_token');
@@ -29,6 +28,19 @@ loginButton?.addEventListener('click', (event) => {
     }
     
   });
+});
 
+const repoButton = document.getElementById('repoButton');
+repoButton?.addEventListener('click', function() {
+  // 'repo' id를 가진 요소의 값을 가져옵니다.
+  const repo = (document.getElementById('repo') as HTMLInputElement).value;
 
+  chrome.runtime.sendMessage({ type: "repo", data: {REPO: repo} }, function(response: any) {
+    if (response.status) {
+      alert(response.data.REPO);
+    } else {
+      alert(JSON.stringify(response));
+    }
+    
+  });
 });
