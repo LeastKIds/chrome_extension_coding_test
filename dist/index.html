@@ -1,10 +1,12 @@
 <!doctype html>
 <html>
-  <script type="module" crossorigin src="/assets/index.html.9dd2151c.js"></script>
+  <script type="module" crossorigin src="/assets/index.html.a21bd090.js"></script>
 
   <body>
     <div>
-        <div class="github token" style="width: 300px; height: 300px;">
+        <div style="width: 300px; height: 300px;">
+
+          <div id="github_token" style="display: block;">
             <div>
                 <label for="token">token:</label>
                 <input type="text" id="token" name="token">
@@ -14,6 +16,17 @@
             </div>
         </div>
 
+        <div id="github_repo" style="display: none;">
+          <div>
+              <label for="repo">repo:</label>
+              <input type="text" id="repo" name="repo">
+          </div>
+          <div>
+              <button id="repoButton">repo</button>
+          </div>
+        </div>
+
+      </div>
     </div>
     
   </body>

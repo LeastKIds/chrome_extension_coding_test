@@ -11,7 +11,22 @@ loginButton?.addEventListener('click', (event) => {
 
   chrome.runtime.sendMessage({ type: "login", data: {TOKEN: TOKEN} }, function(response) {
     console.log("Response from background:", response);
-    alert(JSON.stringify(response));
+    if (response.status) {
+      alert("Login Success");
+      const github_token = document.getElementById('github_token');
+      if (github_token) {
+        github_token.style.display = 'none';
+      }
+
+      const github_repo = document.getElementById('github_repo');
+      if (github_repo) {
+        github_repo.style.display = 'block';
+      }
+
+    } else {
+      alert(response.data.errMessage);
+    }
+    
   });
 
 

@@ -11,8 +11,17 @@ chrome.runtime.onMessage.addListener(
             }
         }).then(response => response.json())
         .then(data => {
-            sendResponse({ status: "Received the login message" , data: {response: data}});
+            const USER = data["login"];
+            chrome.storage.sync.set({ USER: USER }, function() {
+              console.log("saved user name")
+            });
+
+            sendResponse({ status: true });
         })
+        .catch(error => {
+            sendResponse({ status: false , data: {errMessage: "login failed"}});
+        })
+
         return true;
       }
       

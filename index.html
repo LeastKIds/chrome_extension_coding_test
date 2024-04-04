@@ -2,7 +2,9 @@
 <html>
   <body>
     <div>
-        <div class="github token" style="width: 300px; height: 300px;">
+        <div style="width: 300px; height: 300px;">
+
+          <div id="github_token" style="display: block;">
             <div>
                 <label for="token">token:</label>
                 <input type="text" id="token" name="token">
@@ -12,6 +14,17 @@
             </div>
         </div>
 
+        <div id="github_repo" style="display: none;">
+          <div>
+              <label for="repo">repo:</label>
+              <input type="text" id="repo" name="repo">
+          </div>
+          <div>
+              <button id="repoButton">repo</button>
+          </div>
+        </div>
+
+      </div>
     </div>
     <script type="module" src="./src/popus.ts"></script>
   </body>
