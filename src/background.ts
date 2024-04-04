@@ -12,9 +12,9 @@ chrome.runtime.onMessage.addListener(
         }).then(response => response.json())
         .then(data => {
             const USER = data["login"];
-            // chrome.storage.sync.set({ USER: USER }, function() {
-            //   console.log("saved user name")
-            // });
+            chrome.storage.sync.set({ USER: USER }, function() {
+              console.log("saved user name")
+            });
 
             sendResponse({ status: true, data: {USER: USER}});
         })

@@ -1,1 +1,0 @@
-chrome.runtime.onMessage.addListener(function(t,r,n){if(t.type==="login"){console.log("Login message received");const o=t.data.TOKEN;return fetch("https://api.github.com/user",{headers:{Authorization:`Bearer ${o}`}}).then(e=>e.json()).then(e=>{const s=e.login;n({status:!0,data:{USER:s}})}),!0}});
