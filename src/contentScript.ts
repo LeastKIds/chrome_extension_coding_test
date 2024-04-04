@@ -35,6 +35,7 @@ function clickSubmitButton() {
 
     if (successElement) {
       console.log('원하는 요소가 페이지에 존재합니다.');
+      console.log(successElement.textContent);
       // 여기에 원하는 요소를 처리하는 로직을 추가하세요.
       if (successElement.textContent === "Success") {
         console.log('성공적으로 처리되었습니다.');
