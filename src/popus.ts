@@ -11,7 +11,7 @@ loginButton?.addEventListener('click', (event) => {
 
   chrome.runtime.sendMessage({ type: "login", data: {TOKEN: TOKEN} }, function(response) {
     console.log("Response from background:", response);
-    alert(response);
+    alert(JSON.stringify(response));
   });
 
 
