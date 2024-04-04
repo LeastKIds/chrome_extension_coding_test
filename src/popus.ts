@@ -7,9 +7,14 @@ loginButton?.addEventListener('click', (event) => {
   event.preventDefault();
 
   // 토큰값 가져오기
-  const token = (document.getElementById('token') as HTMLInputElement).value;
+  const TOKEN = (document.getElementById('token') as HTMLInputElement).value;
 
-  fetch('https://api.github.com').then(response => response.json()).then(data => {
-    alert(JSON.stringify(data))
-  })
+  chrome.runtime.sendMessage({type: "login", data: {TOKEN: TOKEN}}, (response: {status: string; data?: any}) => {
+    if (response.status == "true") {
+      alert(`Login success! User: ${response.data.login}`);
+    } else {
+      alert(response.data.errorCode)
+    }
+    alert(response.data)
+  });
 });
