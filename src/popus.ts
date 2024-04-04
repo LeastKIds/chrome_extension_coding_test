@@ -14,7 +14,7 @@ loginButton?.addEventListener('click', (event) => {
   chrome.runtime.sendMessage({ type: "login", data: {TOKEN: TOKEN} }, function(response: any) {
    
     if (response.status) {
-      alert(response.data.USER);
+      alert(JSON.stringify(response));
       const github_token = document.getElementById('github_token');
       if (github_token) {
         github_token.style.display = 'none';
@@ -57,6 +57,7 @@ repoButton?.addEventListener('click', function() {
 });
 
 function loginCheck() {
+  alert('loginCheck')
   chrome.runtime.sendMessage({ type: "auth"}, function(response: any) {
     if (response.status) {
       const github_token = document.getElementById('github_token');
@@ -68,6 +69,10 @@ function loginCheck() {
       if (success) {
         success.style.display = 'block';
       }
-    } 
+
+      alert(JSON.stringify(response));
+    } else {
+      alert(JSON.stringify(response));
+    }
   });
 }
