@@ -27,6 +27,9 @@ const manifest = defineManifest({
     background: {
       service_worker: './src/background.ts', // 백그라운드 스크립트로 사용할 파일 지정
     },
+    "permissions": [
+      "storage"
+    ],
 })
 
 // 나중에 매니페스트로 사용할 수 있게 바꿔주는 곳
