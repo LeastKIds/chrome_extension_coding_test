@@ -20,7 +20,7 @@ chrome.runtime.onMessage.addListener(
             
         })
         .catch(error => {
-            sendResponse({ status: false , data: {errMessage: "login failed"}});
+            sendResponse({ status: false , data: {errMessage: error}});
         })
 
         return true;
