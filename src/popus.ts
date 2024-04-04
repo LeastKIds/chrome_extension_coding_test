@@ -37,7 +37,16 @@ repoButton?.addEventListener('click', function() {
 
   chrome.runtime.sendMessage({ type: "repo", data: {REPO: repo} }, function(response: any) {
     if (response.status) {
-      alert(response.data.REPO);
+      alert("Success");
+      const github_repo = document.getElementById('github_repo');
+      if (github_repo) {
+        github_repo.style.display = 'none';
+      }
+      const success = document.getElementById('success');
+      if (success) {
+        success.style.display = 'block';
+      }
+
     } else {
       alert(JSON.stringify(response));
     }
