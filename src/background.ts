@@ -39,14 +39,15 @@ chrome.runtime.onMessage.addListener(
     } else if (request.type === 'repo') {
       let responded = false; // 응답 플래그를 false로 초기화
 
-      chrome.storage.local.get('USER', (result) => {
+      chrome.storage.sync.get(['USER', 'TOKEN'], (result) => {
         if (result.USER) {
           const USER = result.USER;
+          const TOKEN = result.TOKEN;
           const REPO = request.data.REPO;
           fetch(`https://api.github.com/repos/${USER}/${REPO}`)
           .then(response => response.json())
           .then(data => {
-            chrome.storage.sync.set({ REPO: REPO }, function() {
+            chrome.storage.sync.set({ USER: USER, TOKEN: TOKEN, REPO: REPO }, function() {
               if (chrome.runtime.lastError) {
                   if (!responded) {
                       sendResponse({ status: false, data: {errMessage: chrome.runtime.lastError.message}});
