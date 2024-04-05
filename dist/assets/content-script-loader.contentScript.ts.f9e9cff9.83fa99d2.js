@@ -4,7 +4,7 @@
   (async () => {
     await import(
       /* @vite-ignore */
-      chrome.runtime.getURL("assets/contentScript.ts.ec0f1e29.js")
+      chrome.runtime.getURL("assets/contentScript.ts.f9e9cff9.js")
     );
   })().catch(console.error);
 

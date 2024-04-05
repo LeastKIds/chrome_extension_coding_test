@@ -164,6 +164,14 @@ function infoExtraction() {
     const codeSpeedRanking = getElementByXPath(codeSpeedRankingXpath)?.textContent;
     console.log("codeSpeedRanking: ", codeSpeedRanking)
 
+    const codeMemoryXpath = "/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[7]/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div[1]/div[3]/span[2]"
+    const codeMemory = getElementByXPath(codeMemoryXpath)?.textContent;
+    console.log("codeMemory: ", codeMemory)
+
+    const codeMemoryRankingXpath = "/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[7]/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div[2]/div[3]/span[2]"
+    const codeMemoryRanking = getElementByXPath(codeMemoryRankingXpath)?.textContent;
+    console.log("codeMemoryRanking: ", codeMemoryRanking)
+
     console.log("codeTxt");
     console.log(codeTxt);
 
