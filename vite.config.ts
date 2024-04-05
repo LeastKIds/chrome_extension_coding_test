@@ -11,16 +11,6 @@ const manifest = defineManifest({
   // 확장 프로그램 버전
   version: '1.0',
   // 여기서 부터가 코드
-//   content_scripts: [
-//     {
-//       js: ['scripts/content.ts'], // 拡張子を .ts に変更する
-//       matches: [
-//         'https://developer.chrome.com/docs/extensions/*',
-//         'https://developer.chrome.com/docs/webstore/*',
-//       ]
-//     }
-//   ],
-
     action: {
         default_popup: 'index.html',
     },

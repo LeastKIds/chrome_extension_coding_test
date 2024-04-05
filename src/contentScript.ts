@@ -1,3 +1,5 @@
+import TurndownService from 'turndown';
+
 alert("start!!")
 
 // XPath를 사용하여 요소를 찾는 함수
@@ -72,6 +74,70 @@ function getImmediateChildrenByXPath(xpath: string): Element[] {
   
 
 function infoExtraction() {
+    const codeExtensionXpath = "/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[8]/div/div[1]/div[1]/div[1]/div/div/div[1]/div/button"
+    const codeExtensionTag = getElementByXPath(codeExtensionXpath);
+    let codeExtension = "";
+    switch (codeExtensionTag?.textContent) {
+        case "C++":
+            codeExtension = "cpp";
+            break;
+        case "Java":
+            codeExtension = "java";
+            break;
+        case "Python":
+            codeExtension = "py";
+            break;
+        case "Python3":
+            codeExtension = "py";
+            break;
+        case "C":
+            codeExtension = "c";
+            break;
+        case "C#":
+            codeExtension = "cs";
+            break;
+        case "JavaScript":
+            codeExtension = "js";
+            break;
+        case "TypeScript":
+            codeExtension = "ts";
+            break;
+        case "PHP":
+            codeExtension = "php";
+            break;
+        case "Swift":
+            codeExtension = "swift";
+            break;
+        case "Kotlin":
+            codeExtension = "kt";
+            break;
+        case "Dart":
+            codeExtension = "dart";
+            break;
+        case "Go":
+            codeExtension = "go";
+            break;
+        case "Ruby":
+            codeExtension = "rb";
+            break;
+        case "Scala":
+            codeExtension = "scala";
+            break;
+        case "Rust":
+            codeExtension = "rs";
+            break;
+        case "Racket":
+            codeExtension = "rkt";
+            break;
+        case "Erlang":
+            codeExtension = "erl";
+            break;
+        case "Elixir":
+            codeExtension = "ex";
+            break;
+    }
+    console.log("codeExtension: ", codeExtension)
+
     const codesXpath = "/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[8]/div/div[2]/div[1]/div/div/div[1]/div[2]/div[1]/div[5]"
     const codes = getImmediateChildrenByXPath(codesXpath);
 
@@ -85,9 +151,41 @@ function infoExtraction() {
                 codeTxt += c.textContent
             }
         }
+
+        codeTxt += "\n";
        
     });
 
+    const codeSpeedXpath = "/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[7]/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div[1]/div[2]"
+    const codeSpeed = getElementByXPath(codeSpeedXpath)?.textContent;
+    console.log("codeSpeed: ", codeSpeed)
+
+    const codeSpeedRankingXpath = "/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[7]/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div[1]/div[3]"
+    const codeSpeedRanking = getElementByXPath(codeSpeedRankingXpath)?.textContent;
+    console.log("codeSpeedRanking: ", codeSpeedRanking)
+
+    console.log("codeTxt");
     console.log(codeTxt);
+
+    const titleXpath = "/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[4]/div/div[1]/div[1]/div[1]/div/a"
+    const title = getElementByXPath(titleXpath)?.textContent;
+    console.log("title: ", title)
+
+    const content = "/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[4]/div/div[1]/div[3]"
+    const contentResult = document.evaluate(content, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+    const contentNode = contentResult.singleNodeValue;
+
+    if (contentNode !== null) {
+        const markdown = convertHtmlToMarkdown((contentNode as Element).outerHTML);
+        console.log("content");
+        console.log(markdown);
+    } else {
+        console.log("content is null");
+    }
 }
 
+// HTML 문자열을 마크다운으로 변환하는 함수
+function convertHtmlToMarkdown(html: string): string {
+    const turndownService = new TurndownService();
+    return turndownService.turndown(html);
+}
