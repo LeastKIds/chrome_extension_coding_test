@@ -211,10 +211,11 @@ async function pushGithub(USER: string, TOKEN: string, REPO: string, data: any):
 
   // 최근 커밋의 트리 sha를 가져오기
   const commitRes = await fetch(`https://api.github.com/repos/${USER}/${REPO}/git/commits/${shaLatestCommit}`, { headers });
-  if (!commitRes.ok) {
-    return {result: false, message: commitRes}
-  }
+  
   const commitData = await commitRes.json();
+  if (!commitRes.ok) {
+    return {result: false, message: commitData}
+  }
   const shaBaseTree = commitData.tree.sha;
 
   // 3. 새 파일을 포함하는 새 트리를 생성합니다
@@ -239,11 +240,12 @@ async function pushGithub(USER: string, TOKEN: string, REPO: string, data: any):
       ]
     })
   });
-  if (!treeRes.ok) {
-    return {result: false, message: treeRes}
-  }
 
   const treeData = await treeRes.json();
+
+  if (!treeRes.ok) {
+    return {result: false, message: treeData}
+  }
   const shaNewTree = treeData.sha;
 
   // 4. 새 커밋을 생성합니다
@@ -256,10 +258,11 @@ async function pushGithub(USER: string, TOKEN: string, REPO: string, data: any):
       parents: [shaLatestCommit]
     })
   });
-  if (!newCommitRes.ok) {
-    return {result: false, message: newCommitRes}
-  }
+
   const newCommitData = await newCommitRes.json();
+  if (!newCommitRes.ok) {
+    return {result: false, message: newCommitData}
+  }
   const shaNewCommit = newCommitData.sha;
 
   // 5. 브랜치의 HEAD를 새 커밋으로 업데이트합니다
@@ -268,8 +271,10 @@ async function pushGithub(USER: string, TOKEN: string, REPO: string, data: any):
     headers: { ...headers, 'Content-Type': 'application/json' },
     body: JSON.stringify({ sha: shaNewCommit })
   });
+  
+  const updateJson = await update.json();
   if (!update.ok) {
-    return {result: false, message: update}
+    return {result: false, message: updateJson}
   }
 
   return {result: true, message: "Success"}

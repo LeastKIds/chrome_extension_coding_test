@@ -136,7 +136,6 @@ function infoExtraction() {
             codeExtension = "ex";
             break;
     }
-    console.log("codeExtension: ", codeExtension)
 
     const codesXpath = "/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[8]/div/div[2]/div[1]/div/div/div[1]/div[2]/div[1]/div[5]"
     const codes = getImmediateChildrenByXPath(codesXpath);
@@ -158,27 +157,19 @@ function infoExtraction() {
 
     const codeSpeedXpath = "/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[7]/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div[1]/div[2]"
     const codeSpeed = getElementByXPath(codeSpeedXpath)?.textContent;
-    console.log("codeSpeed: ", codeSpeed)
 
     const codeSpeedRankingXpath = "/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[7]/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div[1]/div[3]/span[2]"
     const codeSpeedRanking = getElementByXPath(codeSpeedRankingXpath)?.textContent;
-    console.log("codeSpeedRanking: ", codeSpeedRanking)
 
     const codeMemoryXpath = "/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[7]/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div[2]/div[2]"
     const codeMemory = getElementByXPath(codeMemoryXpath)?.textContent;
-    console.log("codeMemory: ", codeMemory)
 
     const codeMemoryRankingXpath = "/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[7]/div[2]/div/div/div[2]/div/div[2]/div[1]/div/div[2]/div[3]/span[2]"
     const codeMemoryRanking = getElementByXPath(codeMemoryRankingXpath)?.textContent;
-    console.log("codeMemoryRanking: ", codeMemoryRanking)
-
-    console.log("codeTxt");
-    console.log(codeTxt);
 
     const titleXpath = "/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[4]/div/div[1]/div[1]/div[1]/div/a"
     const title = getElementByXPath(titleXpath)?.textContent;
     const changedTitle = formatFileName(title as string)
-    console.log("changedTitle: ", changedTitle)
 
     const content = "/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[4]/div/div[1]/div[3]"
     const contentResult = document.evaluate(content, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
@@ -186,8 +177,6 @@ function infoExtraction() {
 
     if (contentNode !== null) {
         const markdown = convertHtmlToMarkdown((contentNode as Element).outerHTML);
-        console.log("content");
-        console.log(markdown);
 
         const message = {
             type: "github",
