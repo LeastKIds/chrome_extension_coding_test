@@ -253,7 +253,7 @@ async function pushGithub(USER: string, TOKEN: string, REPO: string, data: any):
     method: 'POST',
     headers: { ...headers, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      message: codeSpeed + " " + codeSpeedRanking + " " + codeMemory + " " + codeMemoryRanking,
+      message: `speed: ${codeSpeed} [${codeSpeedRanking}] / memory: ${codeMemory} [${codeMemoryRanking}]`,
       tree: shaNewTree,
       parents: [shaLatestCommit]
     })
