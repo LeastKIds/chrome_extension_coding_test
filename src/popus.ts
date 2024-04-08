@@ -11,9 +11,9 @@ const repoButton = document.getElementById('repoButton');
 // 성공 메시지를 찾아 변수에 할당합니다.
 const success = document.getElementById('success');
 // 유효한 토큰 값을 가지고 있는 input 요소를 찾아 변수에 할당합니다.
-const adminToken = document.getElementById('adminToken');
+const adminToken = document.getElementById('adminToken') as HTMLInputElement;
 // 유효한 repo값을 가지고 있는 input 요소를 찾아 변수에 할당합니다.
-const adminRepo = document.getElementById('adminRepo');
+const adminRepo = document.getElementById('adminRepo') as HTMLInputElement;
 // 뒤로가기 버튼을 찾아 변수에 할당합니다.
 const backButton = document.getElementById('backButton');
 
@@ -61,6 +61,10 @@ repoButton?.addEventListener('click', function() {
         success.style.display = 'block';
       }
 
+      if (adminToken && adminRepo) {
+        info(response.data.TOKEN, response.data.REPO);
+      }
+
     } else {
       alert("Repo verification failed");
     }
@@ -78,6 +82,11 @@ function loginCheck() {
       if (success) {
         success.style.display = 'block';
       }
+
+      if (adminToken && adminRepo) {
+        info(response.data.TOKEN, response.data.REPO);
+      }
+
     } else {
       alert("Auth failed. Enter Token Valuel");
     }
@@ -95,3 +104,12 @@ backButton?.addEventListener('click', function() {
 
 
 });
+
+function info(token: string, repo: string) {
+  if (adminToken) {
+    adminToken.value = token;
+  }
+  if (adminRepo) {
+    adminRepo.value = repo;
+  }
+}

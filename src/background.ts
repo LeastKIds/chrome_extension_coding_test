@@ -57,7 +57,7 @@ chrome.runtime.onMessage.addListener(
               }
               console.log("Saved repo");
               if (!responded) {
-                  sendResponse({ status: true, data: {REPO: REPO}});
+                  sendResponse({ status: true, data: {TOKEN: TOKEN, REPO: REPO}});
                   responded = true; // 응답 플래그를 true로 설정
               }
           });
