@@ -154,6 +154,24 @@ chrome.runtime.onMessage.addListener(
         }
       });
       return true
+    } else if (request.type === 'logout') {
+      let responded = false; // 응답 플래그를 false로 초기화
+      chrome.storage.sync.set({ USER: "", TOKEN: "", REPO: "" }, function() {
+        if (chrome.runtime.lastError) {
+            if (!responded) {
+                sendResponse({ status: false, data: {errMessage: chrome.runtime.lastError.message}});
+                responded = true; // 응답 플래그를 true로 설정
+            }
+            return;
+        }
+
+        if (!responded) {
+            sendResponse({ status: true});
+            responded = true; // 응답 플래그를 true로 설정
+        }
+    });
+      
+      return true
     }
 });
 

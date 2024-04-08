@@ -94,13 +94,24 @@ function loginCheck() {
 }
 
 backButton?.addEventListener('click', function() {
-  if (github_token) {
-    github_token.style.display = 'block';
-  }
 
-  if (success) {
-    success.style.display = 'none';
-  }
+  chrome.runtime.sendMessage({ type: "logout"}, function(response: any) {
+    if (response.status) {
+      if (github_token) {
+        github_token.style.display = 'block';
+      }
+    
+      if (success) {
+        success.style.display = 'none';
+      }
+
+      alert("logout success.");
+
+    } else {
+      alert("logout failed.");
+    }
+  });
+  
 
 
 });
