@@ -202,6 +202,16 @@ function infoExtraction() {
                 codeMemoryRanking: codeMemoryRanking
             }
         }
+
+        chrome.runtime.sendMessage(message, function(response: any) {
+            if (response.status) {
+                console.log(response.data.message);
+                alert("Success");
+            } else {
+                console.log(response.data.errMessage);
+                alert(JSON.stringify(response));
+            }
+        });
     } else {
         console.log("content is null");
     }
