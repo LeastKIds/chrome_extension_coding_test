@@ -1,35 +1,98 @@
 <!doctype html>
 <html>
-  <script type="module" crossorigin src="/assets/index.html.bfea74b6.js"></script>
-
+  <head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" crossorigin src="/assets/index.html.3429b27b.js"></script>
+  </head>
   <body>
     <div>
         <div style="width: 300px; height: 300px;">
 
-          <div id="github_token" style="display: block;">
-            <div>
-                <label for="token">token:</label>
-                <input type="text" id="token" name="token">
-            </div>
-            <div>
-                <button type="submit">login</button>
-            </div>
-        </div>
-
-        <div id="github_repo" style="display: none;">
-          <div>
-              <label for="repo">repo:</label>
-              <input type="text" id="repo" name="repo">
+          <div 
+            class="flex min-h-screen items-center justify-center flex-col space-y-2 p-6" 
+            id="github_token" 
+            style="display: block;"
+          >
+            <input
+              class="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full max-w-sm"
+              placeholder="Token"
+              type="text"
+              id="token"
+            />
+            <button
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full max-w-sm"
+              type="submit"
+              id="tokenButton"
+            >
+              Login
+            </button>
           </div>
-          <div>
-              <button id="repoButton">repo</button>
-          </div>
-        </div>
 
-        <div id="success" style="display: none;">
-          <h1>Success login and repo!!</h1>
-          <button id="backButton">back</button>
-        </div>
+          <div 
+            class="flex min-h-screen items-center justify-center flex-col space-y-2 p-6" 
+            id="github_repo" 
+            style="display: none;"
+          >
+            <input
+              class="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full max-w-sm"
+              placeholder="repo"
+              type="text"
+              id="token"
+            />
+            <button
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full max-w-sm"
+              type="submit"
+              id="repoButton"
+            >
+              Repo
+            </button>
+          </div>
+
+          <div 
+            class="flex min-h-screen items-center justify-center flex-col space-y-2 p-6"
+            id="success" 
+            style="display: none;"
+          >
+            <div class="grid w-full max-w-sm items-center gap-1.5">
+              <label
+                class="peer-disabled:opacity-70 text-sm font-medium leading-none peer-disabled:cursor-not-allowed"
+                for="adminToken"
+              >
+                <span>TOKEN</span>
+              </label>
+              <input
+                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base font-medium peer-disabled:cursor-not-allowed"
+                id="adminToken"
+                placeholder="token"
+                disabled=""
+                type="text"
+              />
+            </div>
+            <div class="grid w-full max-w-sm items-center gap-1.5">
+              <label
+                class="peer-disabled:opacity-70 text-sm font-medium leading-none peer-disabled:cursor-not-allowed"
+                for="adminRepo"
+              >
+                <span>REPO</span>
+              </label>
+              <input
+                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base font-medium peer-disabled:cursor-not-allowed"
+                id="adminRepo"
+                placeholder="REPO"
+                disabled=""
+                type="text"
+              />
+            </div>
+
+            <button
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full max-w-sm"
+              type="submit"
+              id="backButton"
+            >
+              Repo
+            </button>
+          </div>
+
       </div>
     </div>
     

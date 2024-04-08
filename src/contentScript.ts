@@ -195,10 +195,10 @@ function infoExtraction() {
         chrome.runtime.sendMessage(message, function(response: any) {
             if (response.status) {
                 console.log(response.data.message);
-                alert("Success");
+                alert("Success git push!");
             } else {
                 console.log(response.data.errMessage);
-                alert(JSON.stringify(response));
+                alert("Fail git push!: " + response.data.errMessage);
             }
         });
     } else {
