@@ -13,7 +13,7 @@
   "content_scripts": [
     {
       "js": [
-        "assets/content-script-loader.contentScript.ts.2920ddf7.e460ddf2.js"
+        "assets/content-script-loader.contentScript.ts.d386c459.87f58504.js"
       ],
       "matches": [
         "https://leetcode.com/problems/*"
@@ -30,7 +30,7 @@
         "https://leetcode.com/*"
       ],
       "resources": [
-        "assets/contentScript.ts.2920ddf7.js"
+        "assets/contentScript.ts.d386c459.js"
       ],
       "use_dynamic_url": true
     }

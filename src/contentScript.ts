@@ -177,7 +177,8 @@ function infoExtraction() {
 
     const titleXpath = "/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[4]/div/div[1]/div[1]/div[1]/div/a"
     const title = getElementByXPath(titleXpath)?.textContent;
-    console.log("title: ", title)
+    const changedTitle = formatFileName(title as string)
+    console.log("changedTitle: ", changedTitle)
 
     const content = "/html/body/div[1]/div[2]/div/div/div[4]/div/div/div[4]/div/div[1]/div[3]"
     const contentResult = document.evaluate(content, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
@@ -187,6 +188,20 @@ function infoExtraction() {
         const markdown = convertHtmlToMarkdown((contentNode as Element).outerHTML);
         console.log("content");
         console.log(markdown);
+
+        const message = {
+            type: "github",
+            data : {
+                title: changedTitle,
+                content: markdown,
+                codeTxt: codeTxt,
+                codeExtension: codeExtension,
+                codeSpeed: codeSpeed,
+                codeSpeedRanking: codeSpeedRanking,
+                codeMemory: codeMemory,
+                codeMemoryRanking: codeMemoryRanking
+            }
+        }
     } else {
         console.log("content is null");
     }
@@ -197,3 +212,23 @@ function convertHtmlToMarkdown(html: string): string {
     const turndownService = new TurndownService();
     return turndownService.turndown(html);
 }
+
+
+function formatFileName(fileName: string): string {
+    // 파일 이름을 '.'을 기준으로 분리
+    const parts = fileName.split('.');
+    if (parts.length < 2) {
+      console.error("File name does not contain a '.' separator.");
+      return fileName;
+    }
+  
+    // 첫 번째 부분(숫자)을 7자리로 포맷
+    const numberPart = parts[0].padStart(7, '0');
+    // 띄어쓰기를 '-'로 변환하고 나머지 부분과 합침
+    const restOfTheName = parts.slice(1).join(' ').replace(/\s+/g, '-');
+  
+    // 포맷된 숫자 부분과 나머지 부분을 '_'로 연결하여 새로운 파일 이름 생성
+    const newFileName = `${numberPart}_${restOfTheName}`;
+  
+    return newFileName;
+  }

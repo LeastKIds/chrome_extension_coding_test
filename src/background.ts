@@ -114,9 +114,48 @@ chrome.runtime.onMessage.addListener(
         }
       });
       return true
+    } else if (request.type === 'github') {
+      let responded = false; // 응답 플래그를 false로 초기화
+      
+      chrome.storage.sync.get(['USER', 'TOKEN', 'REPO'], (result) => {
+        if (result.USER && result.TOKEN && result.REPO) {
+          const USER = result.USER;
+          const TOKEN = result.TOKEN;
+          const REPO = result.REPO;
+
+          pushGithub(USER, TOKEN, REPO, request.data)
+          .then((pushResult) => {
+            switch (pushResult.result) {
+              case true:
+                if (!responded) {
+                  sendResponse({ status: true, data: {message: pushResult.message}});
+                  responded = true; // 응답 플래그를 true로 설정
+                }
+                break;
+              case false:
+                if (!responded) {
+                  sendResponse({ status: false, data: {errMessage: pushResult.message}});
+                  responded = true; // 응답 플래그를 true로 설정
+                }
+                break;
+            }
+          })
+          .catch((error) => {
+            if (!responded) {
+              sendResponse({ status: false, data: {errMessage: error.toString()}});
+              responded = true; // 응답 플래그를 true로 설정
+            }
+          })          
+        } else {
+          if (!responded) {
+            sendResponse({ status: false, data: {errMessage: result}});
+            responded = true; // 응답 플래그를 true로 설정
+          }
+        }
+      });
+      return true
     }
-  }
-);
+});
 
 async function checkAuth(token: string, repo: string): Promise<boolean>{
   const response = await fetch('https://api.github.com/user', {
@@ -137,4 +176,102 @@ async function checkAuth(token: string, repo: string): Promise<boolean>{
   }
 
   return true
+}
+
+async function pushGithub(USER: string, TOKEN: string, REPO: string, data: any): Promise<{result: boolean, message: string}> {
+  const title: string = data["title"]
+  const content: string = data["markdown"]
+  const codeTxt: string = data["codeTxt"]
+  const codeExtension: string = data["codeExtension"]
+  const codeSpeed: string = data["codeSpeed"]
+  const codeSpeedRanking: string = data["codeSpeedRanking"]
+  const codeMemory: string = data["codeMemory"]
+  const codeMemoryRanking: string = data["codeMemoryRanking"]
+
+  // login check
+  const loginCheck = await checkAuth(TOKEN, REPO)
+  if (!loginCheck) {
+    return {result: false, message: "Auth failed"}
+  }
+
+  // headers setting
+  const headers = {
+    'Authorization': `Bearer ${TOKEN}`,
+    'Accept': 'application/vnd.github.v3+json'
+  };
+
+  // 해당 레파지토리의 main 브랜치의 sha 값 가져오기
+  const branchRes = await fetch(`https://api.github.com/repos/${USER}/${REPO}/branches/main`, { headers });
+  if (!branchRes.ok) {
+    return {result: false, message: "Branch sha not found"}
+  }
+  const branchData = await branchRes.json();
+  // 최근 커밋값을 가져오기
+  const shaLatestCommit = branchData.commit.sha;
+
+  // 최근 커밋의 트리 sha를 가져오기
+  const commitRes = await fetch(`https://api.github.com/repos/${USER}/${REPO}/git/commits/${shaLatestCommit}`, { headers });
+  if (!commitRes.ok) {
+    return {result: false, message: "Commit sha not found"}
+  }
+  const commitData = await commitRes.json();
+  const shaBaseTree = commitData.tree.sha;
+
+  // 3. 새 파일을 포함하는 새 트리를 생성합니다
+  const treeRes = await fetch(`https://api.github.com/repos/${USER}/${REPO}/git/trees`, {
+    method: 'POST',
+    headers: { ...headers, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      base_tree: shaBaseTree,
+      tree: [
+        {
+          path: title + "/" + title + "." + codeExtension,
+          mode: '100644',
+          type: 'blob',
+          content: codeTxt
+        },
+        {
+          path: title + "/" + title + ".md",
+          mode: '100644',
+          type: 'blob',
+          content: content
+        }
+      ]
+    })
+  });
+  if (!treeRes.ok) {
+    return {result: false, message: "Tree not found"}
+  }
+
+  const treeData = await treeRes.json();
+  const shaNewTree = treeData.sha;
+
+  // 4. 새 커밋을 생성합니다
+  const newCommitRes = await fetch(`https://api.github.com/repos/${USER}/${REPO}/git/commits`, {
+    method: 'POST',
+    headers: { ...headers, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      message: codeSpeed + " " + codeSpeedRanking + " " + codeMemory + " " + codeMemoryRanking,
+      tree: shaNewTree,
+      parents: [shaLatestCommit]
+    })
+  });
+  if (!newCommitRes.ok) {
+    return {result: false, message: "New commit not found"}
+  }
+  const newCommitData = await newCommitRes.json();
+  const shaNewCommit = newCommitData.sha;
+
+  // 5. 브랜치의 HEAD를 새 커밋으로 업데이트합니다
+  const update = await fetch(`https://api.github.com/repos/${USER}/${REPO}/git/refs/heads/main`, {
+    method: 'PATCH',
+    headers: { ...headers, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ sha: shaNewCommit })
+  });
+  if (!update.ok) {
+    return {result: false, message: "Update not found"}
+  }
+
+  return {result: true, message: "Success"}
+
 }
