@@ -8,6 +8,8 @@
 
    
 ![image](https://github.com/LeastKIds/chrome_extension_coding_test/assets/52005780/80fa5710-4dd4-4800-84cc-7e0d1932068e)
+
+
 4. 이런 확장기능이 생김
 
 ## 앞으로 해야할 일
