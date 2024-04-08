@@ -180,7 +180,7 @@ async function checkAuth(token: string, repo: string): Promise<boolean>{
 
 async function pushGithub(USER: string, TOKEN: string, REPO: string, data: any): Promise<{result: boolean, message: any}> {
   const title: string = data["title"]
-  const content: string = data["markdown"]
+  const content: string = data["content"]
   const codeTxt: string = data["codeTxt"]
   const codeExtension: string = data["codeExtension"]
   const codeSpeed: string = data["codeSpeed"]
@@ -244,7 +244,7 @@ async function pushGithub(USER: string, TOKEN: string, REPO: string, data: any):
   const treeData = await treeRes.json();
 
   if (!treeRes.ok) {
-    return {result: false, message: treeData}
+    return {result: false, message: shaBaseTree}
   }
   const shaNewTree = treeData.sha;
 
