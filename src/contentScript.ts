@@ -1,7 +1,5 @@
 import TurndownService from 'turndown';
 
-alert("start!!")
-
 // XPath를 사용하여 요소를 찾는 함수
 function getElementByXPath(xpath: string) {
     return document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
