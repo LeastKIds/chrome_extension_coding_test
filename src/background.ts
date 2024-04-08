@@ -178,7 +178,7 @@ async function checkAuth(token: string, repo: string): Promise<boolean>{
   return true
 }
 
-async function pushGithub(USER: string, TOKEN: string, REPO: string, data: any): Promise<{result: boolean, message: string}> {
+async function pushGithub(USER: string, TOKEN: string, REPO: string, data: any): Promise<{result: boolean, message: any}> {
   const title: string = data["title"]
   const content: string = data["markdown"]
   const codeTxt: string = data["codeTxt"]
@@ -203,7 +203,7 @@ async function pushGithub(USER: string, TOKEN: string, REPO: string, data: any):
   // 해당 레파지토리의 main 브랜치의 sha 값 가져오기
   const branchRes = await fetch(`https://api.github.com/repos/${USER}/${REPO}/branches/main`, { headers });
   if (!branchRes.ok) {
-    return {result: false, message: "Branch sha not found"}
+    return {result: false, message: branchRes}
   }
   const branchData = await branchRes.json();
   // 최근 커밋값을 가져오기
@@ -212,7 +212,7 @@ async function pushGithub(USER: string, TOKEN: string, REPO: string, data: any):
   // 최근 커밋의 트리 sha를 가져오기
   const commitRes = await fetch(`https://api.github.com/repos/${USER}/${REPO}/git/commits/${shaLatestCommit}`, { headers });
   if (!commitRes.ok) {
-    return {result: false, message: "Commit sha not found"}
+    return {result: false, message: commitRes}
   }
   const commitData = await commitRes.json();
   const shaBaseTree = commitData.tree.sha;
@@ -240,7 +240,7 @@ async function pushGithub(USER: string, TOKEN: string, REPO: string, data: any):
     })
   });
   if (!treeRes.ok) {
-    return {result: false, message: "Tree not found"}
+    return {result: false, message: treeRes}
   }
 
   const treeData = await treeRes.json();
@@ -257,7 +257,7 @@ async function pushGithub(USER: string, TOKEN: string, REPO: string, data: any):
     })
   });
   if (!newCommitRes.ok) {
-    return {result: false, message: "New commit not found"}
+    return {result: false, message: newCommitRes}
   }
   const newCommitData = await newCommitRes.json();
   const shaNewCommit = newCommitData.sha;
@@ -269,7 +269,7 @@ async function pushGithub(USER: string, TOKEN: string, REPO: string, data: any):
     body: JSON.stringify({ sha: shaNewCommit })
   });
   if (!update.ok) {
-    return {result: false, message: "Update not found"}
+    return {result: false, message: update}
   }
 
   return {result: true, message: "Success"}
