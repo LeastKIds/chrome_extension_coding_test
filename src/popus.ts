@@ -76,3 +76,16 @@ function loginCheck() {
     }
   });
 }
+
+const backButton = document.getElementById('backButton');
+backButton?.addEventListener('click', function() {
+  const github_token = document.getElementById('github_token');
+  if (github_token) {
+    github_token.style.display = 'block';
+  }
+
+  const success = document.getElementById('success');
+  if (success) {
+    success.style.display = 'none';
+  }
+});
